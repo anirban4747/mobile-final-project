@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'detail_screen.dart';
 import '../services/api_service.dart';
-
+import 'settings_screen.dart';
+import '../services/notification_service.dart';
 class HomeScreen extends StatefulWidget {
 
   @override
@@ -28,10 +29,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+      title: Text("Home"),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.settings),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
+            },
+          ),
+        ],
       ),
 
       body: ListView.builder(
+        
         itemCount: data.length,
         itemBuilder: (context,index){
 
@@ -42,6 +55,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   MaterialPageRoute(builder: (context)=>DetailScreen(data[index])));
             },
           );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.notifications),
+        onPressed: () {
+          NotificationService.showNotification();
+          print("Notification triggered");
         },
       ),
     );
